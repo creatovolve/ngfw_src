@@ -31,10 +31,11 @@ public class IntrusionPreventionSettings implements Serializable, JSONString
     private String iptablesProcessing = "pre";
     private String blockAction = "reject";
     private JSONObject suricataSettings = new JSONObject();
+    private List<IntrusionPreventionDaySchedule> schedule = new LinkedList<>();
 
     public IntrusionPreventionSettings() { }
 
-    public IntrusionPreventionSettings(List<IntrusionPreventionRule> rules, List<IntrusionPreventionSignature> signatures, List<IntrusionPreventionVariable> variables, Integer iptablesNfqNumber, Integer iptablesMaxScanSize, String iptablesProcessing)
+    public IntrusionPreventionSettings(List<IntrusionPreventionRule> rules, List<IntrusionPreventionSignature> signatures, List<IntrusionPreventionVariable> variables, Integer iptablesNfqNumber, Integer iptablesMaxScanSize, String iptablesProcessing, List<IntrusionPreventionDaySchedule> schedule)
     {
         this.rules = rules;
         this.signatures = signatures;
@@ -42,6 +43,7 @@ public class IntrusionPreventionSettings implements Serializable, JSONString
         this.iptablesNfqNumber = iptablesNfqNumber;
         this.iptablesMaxScanSize = iptablesMaxScanSize;
         this.iptablesProcessing = iptablesProcessing;
+        this.schedule = schedule;
     }
 
     public Integer getVersion() { return version; }
@@ -82,6 +84,9 @@ public class IntrusionPreventionSettings implements Serializable, JSONString
 
     public String getBlockAction() { return blockAction; }
     public void setBlockAction(String blockAction) { this.blockAction = blockAction; }
+
+    public List<IntrusionPreventionDaySchedule> getSchedule() { return this.schedule; }
+    public void setSchedule(List<IntrusionPreventionDaySchedule> schedule) { this.schedule = schedule; }
 
     /**
      * Returns settings as a JSON string.
