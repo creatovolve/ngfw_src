@@ -65,6 +65,15 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
             bypassRules: {
                 data: '{settings.bypassRules.list}'
             },
+            updateSignatureFrequencyStore: {
+                storeId: 'updateSignatureFrequencyStore',
+                fields: [ 'name', 'value' ],
+                data:[
+                    { name: 'None', value: 'None' },
+                    { name: 'Daily', value: 'Daily' },
+                    { name: 'Weekly', value: 'Weekly' }
+                ]
+            }
         }
     },
 
@@ -74,6 +83,7 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
         { xtype: 'app-intrusion-prevention-signatures' },
         { xtype: 'app-intrusion-prevention-variables' },
         { xtype: 'app-intrusion-prevention-bypass' },
+        { xtype: 'app-intrusion-prevention-update-signatures' },
         { xtype: 'app-intrusion-prevention-advanced',
             tabConfig:{
                 hidden: true,
