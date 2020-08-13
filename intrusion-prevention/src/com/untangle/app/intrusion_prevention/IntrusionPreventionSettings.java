@@ -37,13 +37,13 @@ public class IntrusionPreventionSettings implements Serializable, JSONString
     public IntrusionPreventionSettings() 
     { 
         //Default is a 7 day schedule with -1 for hours/minute
-        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule());
-        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule());
-        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule());
-        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule());
-        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule());
-        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule());
-        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule());
+        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule("Sunday"));
+        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule("Monday"));
+        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule("Tuesday"));
+        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule("Wednesday"));
+        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule("Thursday"));
+        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule("Friday"));
+        updateSignatureSchedule.add(new IntrusionPreventionDaySchedule("Saturday"));
     }
 
     public IntrusionPreventionSettings(List<IntrusionPreventionRule> rules, List<IntrusionPreventionSignature> signatures, List<IntrusionPreventionVariable> variables, Integer iptablesNfqNumber, Integer iptablesMaxScanSize, String iptablesProcessing, List<IntrusionPreventionDaySchedule> updateSignatureSchedule, String updateSignatureFrequency)
@@ -97,8 +97,8 @@ public class IntrusionPreventionSettings implements Serializable, JSONString
     public String getBlockAction() { return blockAction; }
     public void setBlockAction(String blockAction) { this.blockAction = blockAction; }
 
-    public List<IntrusionPreventionDaySchedule> getSchedule() { return this.updateSignatureSchedule; }
-    public void setSchedule(List<IntrusionPreventionDaySchedule> updateSignatureSchedule) { this.updateSignatureSchedule = updateSignatureSchedule; }
+    public List<IntrusionPreventionDaySchedule> getUpdateSignatureSchedule() { return this.updateSignatureSchedule; }
+    public void setUpdateSignatureSchedule(List<IntrusionPreventionDaySchedule> updateSignatureSchedule) { this.updateSignatureSchedule = updateSignatureSchedule; }
 
     public String getUpdateSignatureFrequency() { return this.updateSignatureFrequency; }
     public void setUpdateSignatureFrequency(String updateSignatureFrequency) { this.updateSignatureFrequency = updateSignatureFrequency; }

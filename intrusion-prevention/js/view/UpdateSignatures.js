@@ -1,9 +1,9 @@
-Ext.define('Ung.apps.intrusionprevention.view.UpdateSignatures', {
+Ext.define('Ung.apps.intrusionprevention.view.Updates', {
     extend: 'Ext.panel.Panel',
-    alias: 'widget.app-intrusion-prevention-update-signatures',
+    alias: 'widget.app-intrusion-prevention-updates',
     itemId: 'update-signatures',
 
-    title: 'Update Signatures'.t(),
+    title: 'Updates'.t(),
 
     scrollable: true,
     padding: 10,
@@ -21,50 +21,13 @@ Ext.define('Ung.apps.intrusionprevention.view.UpdateSignatures', {
         }, {
             xtype: 'combo',
             fieldLabel: 'Frequency'.t(),
-            bind: {
-                store: '{updateSignatureFrequencyStore}',
-                value: '{settings.updateSignatureFrequency}'
-            },
+            store: Ung.apps.intrusionprevention.Main.updateSignatureFrequency,
+            bind: '{settings.updateSignatureFrequency}',
             queryMode: 'local',
             editable: false,
             displayField: 'name',
             valueField: 'value'
-        }, {
-            xtype: 'fieldset',
-            border: 'false',
-            layout: {
-                type: 'vbox'
-            },
-            items: [{
-                xtype: 'fieldset',
-                border: 'false',
-                layout: {
-                    type: 'hbox'
-                },
-                items: [{
-                    xtype: 'combo',
-                    queryMode: 'local',
-                    fieldLabel: 'Sunday',
-                    editable: false,
-                    bind: {
-                        store: '{updateSignatureHourStore}',
-                        value: '{settings.updateSignatureSchedule[0].hour}'
-                    },
-                    displayField: 'name',
-                    valueField: 'value'
-                }, {
-                    xtype: 'combo',
-                    queryMode: 'local',
-                    editable: false,
-                    bind: {
-                        store: '{updateSignatureMinuteStore}',
-                        value: '{settings.updateSignatureSchedule[0].minute}'
-                    },
-                    displayField: 'name',
-                    valueField: 'value'
-                }]
-
-            }]
-        }]
+        },
+        Ung.apps['intrusionprevention'].Main.updateSignatureAllDays]
     }]
 });

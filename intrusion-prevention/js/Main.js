@@ -65,30 +65,8 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
             bypassRules: {
                 data: '{settings.bypassRules.list}'
             },
-            updateSignatureFrequencyStore: {
-                storeId: 'updateSignatureFrequencyStore',
-                fields: [ 'name', 'value' ],
-                data: [
-                    { name: 'None', value: 'None' },
-                    { name: 'Daily', value: 'Daily' },
-                    { name: 'Weekly', value: 'Weekly' }
-                ]
-            },
-            updateSignatureHourStore: {
-                storeId: 'updateSignatureHourStore',
-                fields: [ 'name', 'value' ],
-                data: [
-                    { name: '1', value: 1 },
-                    { name: '2', value: 2 }
-                ]
-            },
-            updateSignatureMinuteStore: {
-                storeId: 'updateSignatureMinuteStore',
-                fields: [ 'name', 'value' ],
-                data: [
-                    { name: '01', value: 1 },
-                    { name: '02', value: 2 }
-                ]
+            updateSignatureSchedule: {
+                data: '{settings.updateSignatureSchedule.list}'
             }
         }
     },
@@ -99,7 +77,7 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
         { xtype: 'app-intrusion-prevention-signatures' },
         { xtype: 'app-intrusion-prevention-variables' },
         { xtype: 'app-intrusion-prevention-bypass' },
-        { xtype: 'app-intrusion-prevention-update-signatures' },
+        { xtype: 'app-intrusion-prevention-updates' },
         { xtype: 'app-intrusion-prevention-advanced',
             tabConfig:{
                 hidden: true,
@@ -111,6 +89,78 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
     ],
 
     statics: {
+        updateSignatureFrequency: Ext.create('Ext.data.ArrayStore', {
+            fields: [ 'name', 'value' ],
+            data: [
+                [ 'None', 'None' ],
+                [ 'Daily', 'Daily' ],
+                [ 'Weekly', 'Weekly' ]
+            ]
+        }),
+
+        updateSignatureMinute: Ext.create('Ext.data.ArrayStore', {
+            fields: [ 'name', 'value' ],
+            data: [
+                [ '01', 1 ],
+                [ '02', 2 ]
+            ]
+        }),
+
+        updateSignatureAllDays:  {
+                xtype: 'grid',
+    
+                hideHeaders: true,
+                border: false,
+                stripeRows: false,
+    
+                bind: '{updateSignatureSchedule}',
+                
+                columns: [{
+                    dataIndex: 'day',
+                    width: Renderer.messageWidth,
+                }, {
+                    dataIndex: 'hour',
+                    xtype: 'widgetcolumn',
+                    widget: {
+                        xtype: 'combo',
+                        editable: false,
+                        queryMode: 'local',
+                        bind: '{record.hour}',
+                        store: new Ext.data.ArrayStore({
+                            fields: [ 'stringTime', 'intTime' ],
+                            data: [
+                                [ 'No Time Chosen', -1],
+                                [ '1', 1 ],
+                                [ '2', 2 ]
+                            ]
+                        }),
+                        displayField: 'stringTime',
+                        valueField: 'intTime'
+                    }
+                }, {
+                    dataIndex: 'minute',
+                    xtype: 'widgetcolumn',
+                    widget: {
+                        xtype: 'combo',
+                        editable: false,
+                        queryMode: 'local',
+                        bind: '{record.minute}',
+                        store: new Ext.data.ArrayStore({
+                            fields: [ 'stringTime', 'intTime' ],
+                            data: [
+                                [ 'No Time Chosen', -1],
+                                [ '01', 1 ],
+                                [ '02', 2 ]
+                            ]
+                        }),
+                        displayField: 'stringTime',
+                        valueField: 'intTime'
+                    }
+                }]
+            
+        },
+
+
         processingStage: Ext.create('Ext.data.ArrayStore', {
             fields: [ 'value', 'description', 'detail'],
             data: [
@@ -308,5 +358,7 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
         categoryRenderer: function(value, meta, record){
             return record.get('description');
         },
+
+
     }
 });

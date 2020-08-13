@@ -13,9 +13,14 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class IntrusionPreventionDaySchedule implements Serializable, JSONString
 {
-    public Integer hour;
-    public Integer minute;
+    private Integer hour = -1;
+    private Integer minute = -1;
+    private String day = "Sunday";
 
+   public IntrusionPreventionDaySchedule(String day) {
+      this.day = day;
+   }
+   
    /**
       Constructor
     */
@@ -42,6 +47,9 @@ public class IntrusionPreventionDaySchedule implements Serializable, JSONString
 
    public Integer getMinute() { return this.hour; }
    public void setMinute(Integer minute) { this.minute = minute; }
+
+   public String getDay() { return this.day; }
+   public void setDay(String day) { this.day = day; }
 
    /**
      * Returns daySchedule as a JSON string.
