@@ -68,10 +68,26 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
             updateSignatureFrequencyStore: {
                 storeId: 'updateSignatureFrequencyStore',
                 fields: [ 'name', 'value' ],
-                data:[
+                data: [
                     { name: 'None', value: 'None' },
                     { name: 'Daily', value: 'Daily' },
                     { name: 'Weekly', value: 'Weekly' }
+                ]
+            },
+            updateSignatureHourStore: {
+                storeId: 'updateSignatureHourStore',
+                fields: [ 'name', 'value' ],
+                data: [
+                    { name: '1', value: 1 },
+                    { name: '2', value: 2 }
+                ]
+            },
+            updateSignatureMinuteStore: {
+                storeId: 'updateSignatureMinuteStore',
+                fields: [ 'name', 'value' ],
+                data: [
+                    { name: '01', value: 1 },
+                    { name: '02', value: 2 }
                 ]
             }
         }

@@ -13,8 +13,8 @@ import java.io.Serializable;
 @SuppressWarnings("serial")
 public class IntrusionPreventionDaySchedule implements Serializable, JSONString
 {
-    private Integer hour;
-    private Integer minute;
+    public Integer hour;
+    public Integer minute;
 
    /**
       Constructor

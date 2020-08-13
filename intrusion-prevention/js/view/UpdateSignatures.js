@@ -8,6 +8,11 @@ Ext.define('Ung.apps.intrusionprevention.view.UpdateSignatures', {
     scrollable: true,
     padding: 10,
 
+    defaults: {
+        xtype: 'fieldset',
+        padding: 10
+    },
+
     items: [{
         title: 'Update Signatures and Signatures Schedule'.t(),
         items: [{
@@ -16,8 +21,6 @@ Ext.define('Ung.apps.intrusionprevention.view.UpdateSignatures', {
         }, {
             xtype: 'combo',
             fieldLabel: 'Frequency'.t(),
-            labelAlign: 'right',
-            width: 400,
             bind: {
                 store: '{updateSignatureFrequencyStore}',
                 value: '{settings.updateSignatureFrequency}'
@@ -26,6 +29,42 @@ Ext.define('Ung.apps.intrusionprevention.view.UpdateSignatures', {
             editable: false,
             displayField: 'name',
             valueField: 'value'
+        }, {
+            xtype: 'fieldset',
+            border: 'false',
+            layout: {
+                type: 'vbox'
+            },
+            items: [{
+                xtype: 'fieldset',
+                border: 'false',
+                layout: {
+                    type: 'hbox'
+                },
+                items: [{
+                    xtype: 'combo',
+                    queryMode: 'local',
+                    fieldLabel: 'Sunday',
+                    editable: false,
+                    bind: {
+                        store: '{updateSignatureHourStore}',
+                        value: '{settings.updateSignatureSchedule[0].hour}'
+                    },
+                    displayField: 'name',
+                    valueField: 'value'
+                }, {
+                    xtype: 'combo',
+                    queryMode: 'local',
+                    editable: false,
+                    bind: {
+                        store: '{updateSignatureMinuteStore}',
+                        value: '{settings.updateSignatureSchedule[0].minute}'
+                    },
+                    displayField: 'name',
+                    valueField: 'value'
+                }]
+
+            }]
         }]
     }]
 });
