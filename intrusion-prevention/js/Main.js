@@ -98,24 +98,74 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
             ]
         }),
 
-        updateSignatureMinute: Ext.create('Ext.data.ArrayStore', {
-            fields: [ 'name', 'value' ],
+        updateSignatureHour: Ext.create('Ext.data.ArrayStore', {
+            fields: [ 'stringTime', 'intTime' ],
             data: [
-                [ '01', 1 ],
-                [ '02', 2 ]
+                [ 'No Time Chosen', -1],
+                [ '1', 1 ],
+                [ '2', 2 ],
+                [ '3', 3 ],
+                [ '4', 4 ],
+                [ '5', 5 ],
+                [ '6', 6 ],
+                [ '7', 7 ],
+                [ '8', 8 ],
+                [ '9', 9 ],
+                [ '10', 10 ],
+                [ '11', 11 ],
+                [ '12', 12 ]
             ]
         }),
 
-        updateSignatureAllDays:  {
+        updateSignatureMinute: Ext.create('Ext.data.ArrayStore', {
+            fields: [ 'stringTime', 'intTime' ],
+            data: [
+                [ 'No Time Chosen', -1],
+                [ '00', 0],
+                [ '10', 10 ],
+                [ '20', 20 ],
+                [ '30', 30 ],
+                [ '40', 40 ],
+                [ '50', 50 ]
+            ]
+        }),
+
+        updateSignatureDays: Ext.create('Ext.data.ArrayStore', {
+            fields: [ 'displayValue', 'value' ],
+            data: [
+                [ 'Pick a Day', "None" ],
+                [ 'Sunday', "Sunday" ],
+                [ 'Monday' , "Monday" ],
+                [ 'Tuesday', "Tuesday" ],
+                [ 'Wednesday', "Wednesday" ],
+                [ 'Thursday', "Thursday" ],
+                [ 'Friday', "Friday" ],
+                [ 'Saturday', "Saturday" ]
+            ]
+        }),
+
+        updateSignatureDaily: function() {
+            return {
                 xtype: 'grid',
     
                 hideHeaders: true,
                 border: false,
                 stripeRows: false,
-    
-                bind: '{updateSignatureSchedule}',
-                
+                hidden: true,
+
+                bind: {
+                    store: '{updateSignatureSchedule}',
+                    hidden: '{settings.updateSignatureFrequency != \'Daily\'}'
+                },
+                    
                 columns: [{
+                    xtype: 'widgetcolumn',
+                    dataIndex: 'enabled',
+                    widget: {
+                        xtype: 'checkbox',
+                        bind: '{record.enabled}'
+                    }
+                }, {
                     dataIndex: 'day',
                     width: Renderer.messageWidth,
                 }, {
@@ -126,14 +176,7 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
                         editable: false,
                         queryMode: 'local',
                         bind: '{record.hour}',
-                        store: new Ext.data.ArrayStore({
-                            fields: [ 'stringTime', 'intTime' ],
-                            data: [
-                                [ 'No Time Chosen', -1],
-                                [ '1', 1 ],
-                                [ '2', 2 ]
-                            ]
-                        }),
+                        store: Ung.apps.intrusionprevention.Main.updateSignatureHour,
                         displayField: 'stringTime',
                         valueField: 'intTime'
                     }
@@ -145,19 +188,64 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
                         editable: false,
                         queryMode: 'local',
                         bind: '{record.minute}',
-                        store: new Ext.data.ArrayStore({
-                            fields: [ 'stringTime', 'intTime' ],
-                            data: [
-                                [ 'No Time Chosen', -1],
-                                [ '01', 1 ],
-                                [ '02', 2 ]
-                            ]
-                        }),
+                        store: Ung.apps.intrusionprevention.Main.updateSignatureMinute,
                         displayField: 'stringTime',
                         valueField: 'intTime'
                     }
                 }]
+            };
             
+        },
+
+        updateSignatureWeekly: function() {
+            return {
+                xtype: 'fieldset',
+
+                layout: {
+                    type: 'hbox'
+                },
+    
+                border: false,
+                hidden: true,
+
+                bind: {
+                    hidden: '{settings.updateSignatureFrequency != \'Weekly\'}'
+                },
+                    
+                items: [{
+                    xtype: 'combo',
+                    editable: false,
+                    queryMode: 'local',
+                    bind: '{settings.updateSignatureWeeklyDay}',
+                    store: Ung.apps.intrusionprevention.Main.updateSignatureDays,
+                    displayField: 'displayValue',
+                    valueField: 'value'
+                }, {
+                    xtype: 'combo',
+                    editable: false,
+                    queryMode: 'local',
+                    bind: '{settings.updateSignatureWeeklyHour}',
+                    store: Ung.apps.intrusionprevention.Main.updateSignatureHour,
+                    displayField: 'stringTime',
+                    valueField: 'intTime'
+
+                }, {
+                    xtype: 'combo',
+                    editable: false,
+                    queryMode: 'local',
+                    bind: '{settings.updateSignatureWeeklyMinute}',
+                    store: Ung.apps.intrusionprevention.Main.updateSignatureMinute,
+                    displayField: 'stringTime',
+                    valueField: 'intTime'
+                }]
+            };
+            
+        },
+
+        updateSignatureButton: {
+            xtype: 'button',
+            text: 'Update Now'.t(),
+            //handler
         },
 
 

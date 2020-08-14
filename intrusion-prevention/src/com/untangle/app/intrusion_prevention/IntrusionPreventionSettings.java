@@ -33,6 +33,9 @@ public class IntrusionPreventionSettings implements Serializable, JSONString
     private JSONObject suricataSettings = new JSONObject();
     private String updateSignatureFrequency = "Daily";
     private List<IntrusionPreventionDaySchedule> updateSignatureSchedule = new LinkedList<>();
+    private String updateSignatureWeeklyDay = "None";
+    private Integer updateSignatureWeeklyHour = -1;
+    private Integer updateSignatureWeeklyMinute = -1;
 
     public IntrusionPreventionSettings() 
     { 
@@ -46,7 +49,7 @@ public class IntrusionPreventionSettings implements Serializable, JSONString
         updateSignatureSchedule.add(new IntrusionPreventionDaySchedule("Saturday"));
     }
 
-    public IntrusionPreventionSettings(List<IntrusionPreventionRule> rules, List<IntrusionPreventionSignature> signatures, List<IntrusionPreventionVariable> variables, Integer iptablesNfqNumber, Integer iptablesMaxScanSize, String iptablesProcessing, List<IntrusionPreventionDaySchedule> updateSignatureSchedule, String updateSignatureFrequency)
+    public IntrusionPreventionSettings(List<IntrusionPreventionRule> rules, List<IntrusionPreventionSignature> signatures, List<IntrusionPreventionVariable> variables, Integer iptablesNfqNumber, Integer iptablesMaxScanSize, String iptablesProcessing, List<IntrusionPreventionDaySchedule> updateSignatureSchedule, String updateSignatureFrequency, String updateSignatureWeeklyDay, Integer updateSignatureWeeklyHour, Integer updateSignatureWeeklyMinute)
     {
         this.rules = rules;
         this.signatures = signatures;
@@ -56,6 +59,9 @@ public class IntrusionPreventionSettings implements Serializable, JSONString
         this.iptablesProcessing = iptablesProcessing;
         this.updateSignatureSchedule = updateSignatureSchedule;
         this.updateSignatureFrequency = updateSignatureFrequency;
+        this.updateSignatureWeeklyDay = updateSignatureWeeklyDay;
+        this.updateSignatureWeeklyHour = updateSignatureWeeklyHour;
+        this.updateSignatureWeeklyMinute = updateSignatureWeeklyMinute;
     }
 
     public Integer getVersion() { return version; }
@@ -102,6 +108,15 @@ public class IntrusionPreventionSettings implements Serializable, JSONString
 
     public String getUpdateSignatureFrequency() { return this.updateSignatureFrequency; }
     public void setUpdateSignatureFrequency(String updateSignatureFrequency) { this.updateSignatureFrequency = updateSignatureFrequency; }
+
+    public String getUpdateSignatureWeeklyDay() { return this.updateSignatureWeeklyDay; }
+    public void setUpdateSignatureWeeklyDay(String updateSignatureWeeklyDay) { this.updateSignatureWeeklyDay = updateSignatureWeeklyDay; }
+
+    public Integer getUpdateSignatureWeeklyHour() { return this.updateSignatureWeeklyHour; }
+    public void setUpdateSignatureWeeklyHour(Integer updateSignatureWeeklyHour) { this.updateSignatureWeeklyHour = updateSignatureWeeklyHour; }
+
+    public Integer getUpdateSignatureWeeklyMinute() { return this.updateSignatureWeeklyMinute; }
+    public void setUpdateSignatureWeeklyMinute(Integer updateSignatureWeeklyMinute) { this.updateSignatureWeeklyMinute = updateSignatureWeeklyMinute; }
 
     /**
      * Returns settings as a JSON string.
