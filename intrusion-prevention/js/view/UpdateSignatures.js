@@ -28,6 +28,7 @@ Ext.define('Ung.apps.intrusionprevention.view.Updates', {
             displayField: 'name',
             valueField: 'value'
         },
+        Ung.apps['intrusionprevention'].Main.updateSignatureIsMilitaryTime,
         Ung.apps['intrusionprevention'].Main.updateSignatureDaily(),
         Ung.apps['intrusionprevention'].Main.updateSignatureWeekly(),
         Ung.apps['intrusionprevention'].Main.updateSignatureButton]

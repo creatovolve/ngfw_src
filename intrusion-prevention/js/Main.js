@@ -117,6 +117,37 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
             ]
         }),
 
+        updateSignatureHourMilitary: Ext.create('Ext.data.ArrayStore', {
+            fields: [ 'stringTime', 'intTime' ],
+            data: [
+                [ 'No Time Chosen', -1 ],
+                [ '00', 0 ],
+                [ '01', 1 ],
+                [ '02', 2 ],
+                [ '03', 3 ],
+                [ '04', 4 ],
+                [ '05', 5 ],
+                [ '06', 6 ],
+                [ '07', 7 ],
+                [ '08', 8 ],
+                [ '09', 9 ],
+                [ '10', 10 ],
+                [ '11', 11 ],
+                [ '12', 12 ],
+                [ '13', 13 ],
+                [ '14', 14 ],
+                [ '15', 15 ],
+                [ '16', 16 ],
+                [ '17', 17 ],
+                [ '18', 18 ],
+                [ '19', 19 ],
+                [ '20', 20 ],
+                [ '21', 21 ],
+                [ '22', 22 ],
+                [ '23', 23 ] 
+            ]
+        }),
+
         updateSignatureMinute: Ext.create('Ext.data.ArrayStore', {
             fields: [ 'stringTime', 'intTime' ],
             data: [
@@ -143,6 +174,20 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
                 [ 'Saturday', "Saturday" ]
             ]
         }),
+
+        updateSignatureIsAm: Ext.create('Ext.data.ArrayStore', {
+            fields: [ 'displayValue', 'value' ],
+            data: [
+                [ 'AM', true ],
+                [ 'PM', false ]
+            ]
+        }),
+
+        updateSignatureIsMilitaryTime: {
+            xtype: 'checkbox',
+            boxLabel: "Show time in military time",
+            bind: '{settings.updateSignatureIsMilitaryTime}'
+        },
 
         updateSignatureDaily: function() {
             return {
@@ -171,12 +216,33 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
                 }, {
                     dataIndex: 'hour',
                     xtype: 'widgetcolumn',
+                    hidden: false,
+                    bind: {
+                        hidden: '{!(settings.updateSignatureIsMilitaryTime == false)}'
+                    },
+                    widget: {
+                        xtype: 'combo',
+                        editable: false,
+                        queryMode: 'local',
+                        hidden: false,
+                        bind: '{record.hour}',
+                        store: Ung.apps.intrusionprevention.Main.updateSignatureHour,
+                        displayField: 'stringTime',
+                        valueField: 'intTime'
+                    }
+                }, {
+                    dataIndex: 'hour',
+                    xtype: 'widgetcolumn',
+                    hidden: true,
+                    bind: {
+                        hidden: '{!(settings.updateSignatureIsMilitaryTime == true)}'
+                    },
                     widget: {
                         xtype: 'combo',
                         editable: false,
                         queryMode: 'local',
                         bind: '{record.hour}',
-                        store: Ung.apps.intrusionprevention.Main.updateSignatureHour,
+                        store: Ung.apps.intrusionprevention.Main.updateSignatureHourMilitary,
                         displayField: 'stringTime',
                         valueField: 'intTime'
                     }
@@ -191,6 +257,22 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
                         store: Ung.apps.intrusionprevention.Main.updateSignatureMinute,
                         displayField: 'stringTime',
                         valueField: 'intTime'
+                    }
+                }, {
+                    dataIndex: 'isAm',
+                    xtype: 'widgetcolumn',
+                    hidden: false,
+                    bind: {
+                        hidden: '{!(settings.updateSignatureIsMilitaryTime == false)}'
+                    },
+                    widget: {
+                        xtype: 'combo',
+                        editable: false,
+                        queryMode: 'local',
+                        bind: '{record.isAm}',
+                        store: Ung.apps.intrusionprevention.Main.updateSignatureIsAm,
+                        displayField: 'displayValue',
+                        valueField: 'value'
                     }
                 }]
             };
@@ -216,7 +298,7 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
                     xtype: 'combo',
                     editable: false,
                     queryMode: 'local',
-                    bind: '{settings.updateSignatureWeeklyDay}',
+                    bind: '{settings.updateSignatureWeekly.day}',
                     store: Ung.apps.intrusionprevention.Main.updateSignatureDays,
                     displayField: 'displayValue',
                     valueField: 'value'
@@ -224,7 +306,11 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
                     xtype: 'combo',
                     editable: false,
                     queryMode: 'local',
-                    bind: '{settings.updateSignatureWeeklyHour}',
+                    hidden: false,
+                    bind: {
+                        value: '{settings.updateSignatureWeekly.hour}',
+                        hidden: '{!(settings.updateSignatureIsMilitaryTime == false)}'
+                    },
                     store: Ung.apps.intrusionprevention.Main.updateSignatureHour,
                     displayField: 'stringTime',
                     valueField: 'intTime'
@@ -233,10 +319,34 @@ Ext.define('Ung.apps.intrusionprevention.Main', {
                     xtype: 'combo',
                     editable: false,
                     queryMode: 'local',
-                    bind: '{settings.updateSignatureWeeklyMinute}',
+                    hidden: true,
+                    bind: {
+                        value: '{settings.updateSignatureWeekly.hour}',
+                        hidden: '{!(settings.updateSignatureIsMilitaryTime == true)}'
+                    },
+                    store: Ung.apps.intrusionprevention.Main.updateSignatureHourMilitary,
+                    displayField: 'stringTime',
+                    valueField: 'intTime'
+                }, {
+                    xtype: 'combo',
+                    editable: false,
+                    queryMode: 'local',
+                    bind: '{settings.updateSignatureWeekly.minute}',
                     store: Ung.apps.intrusionprevention.Main.updateSignatureMinute,
                     displayField: 'stringTime',
                     valueField: 'intTime'
+                }, {
+                    xtype: 'combo',
+                    editable: false,
+                    queryMode: 'local',
+                    hidden: false,
+                    bind: {
+                        value: '{settings.updateSignatureWeekly.isAm}',
+                        hidden: '{!(settings.updateSignatureIsMilitaryTime == false)}'
+                    },
+                    store: Ung.apps.intrusionprevention.Main.updateSignatureIsAm,
+                    displayField: 'displayValue',
+                    valueField: 'value'
                 }]
             };
             

@@ -15,8 +15,9 @@ public class IntrusionPreventionDaySchedule implements Serializable, JSONString
 {
     private Integer hour = -1;
     private Integer minute = -1;
-    private String day = "Sunday";
+    private String day = "None";
     private boolean enabled = true;
+    private boolean isAm = true;
 
    public IntrusionPreventionDaySchedule(String day) {
       this.day = day;
@@ -54,6 +55,9 @@ public class IntrusionPreventionDaySchedule implements Serializable, JSONString
 
    public boolean getEnabled() { return this.enabled; }
    public void setEnabled(boolean enabled) { this.enabled = enabled; }
+
+   public boolean getIsAm() { return this.isAm; }
+   public void setIsAm(boolean isAm) { this.isAm = isAm; }
 
    /**
      * Returns daySchedule as a JSON string.
