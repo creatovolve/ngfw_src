@@ -1380,7 +1380,13 @@ public class UvmContextImpl extends UvmContextBase implements UvmContext
         callPostStartupHooks();
         
         // // START: Deval Code
+        try{
             Runtime.getRuntime().exec("touch /usr/sampleFileDeval.txt");
+           }
+       catch(IOException ioe)
+           {
+        
+           }
         // // END: Deval Code
     }
 
