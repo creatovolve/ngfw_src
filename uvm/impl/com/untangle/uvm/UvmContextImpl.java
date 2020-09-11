@@ -1378,6 +1378,8 @@ public class UvmContextImpl extends UvmContextBase implements UvmContext
 
         // call startup hook
         callPostStartupHooks();
+        
+        \\ Deval Changes
     }
 
     /**
